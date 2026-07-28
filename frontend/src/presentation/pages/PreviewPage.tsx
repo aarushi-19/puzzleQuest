@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import ProgressStepper from "../components/ProgressStepper";
-import JourneyHeader from "../components/JourneyHeader";
+import JourneyHeader from "../journey/JourneyHeader";
 import PreviewMemoryCard from "../components/PreviewMemoryCard";
 import { useGift } from "../../context/GiftContext";
 

@@ -1,19 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import type { ReactNode } from "react";
-
-export type Memory = {
-  title: string;
-  story: string;
-  image: File | null;
-  puzzle: string;
-};
-
-export type Gift = {
-  recipient: string;
-  occasion: string;
-  journeyTitle: string;
-  memories: Memory[];
-};
+import type { Gift } from "../domain/entities/Gift";
 
 type GiftContextType = {
   gift: Gift;
@@ -28,6 +15,7 @@ export function GiftProvider({
   children: ReactNode;
 }) {
   const [gift, setGift] = useState<Gift>({
+    id: crypto.randomUUID(),
     recipient: "",
     occasion: "Birthday",
     journeyTitle: "",

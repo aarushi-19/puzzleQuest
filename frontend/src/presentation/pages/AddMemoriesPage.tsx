@@ -2,20 +2,23 @@ import { useNavigate } from "react-router-dom";
 import { useGift } from "../../context/GiftContext";
 import MemoryCard from "../components/MemoryCard";
 import ProgressStepper from "../components/ProgressStepper";
+import type { Memory } from "../../domain/entities/Gift";
 
 export default function AddMemoriesPage() {
   const navigate = useNavigate();
   const { gift, setGift } = useGift();
 
-  const memories =
+  const memories: Memory[] =
     gift.memories.length > 0
       ? gift.memories
       : [
           {
+            id: crypto.randomUUID(),
             title: "",
             story: "",
             image: null,
-            puzzle: "",
+            puzzle: "jigsaw",
+            status: "available",
           },
         ];
 
@@ -55,22 +58,23 @@ export default function AddMemoriesPage() {
   };
 
   const addMemory = () => {
+    const newMemory: Memory = {
+      id: crypto.randomUUID(),
+      title: "",
+      story: "",
+      image: null,
+      puzzle: "jigsaw",
+      status: memories.length === 0 ? "available" : "locked",
+    };
+
     setGift({
       ...gift,
-      memories: [
-        ...memories,
-        {
-          title: "",
-          story: "",
-          image: null,
-          puzzle: "",
-        },
-      ],
+      memories: [...memories, newMemory],
     });
   };
 
   const handleContinue = () => {
-    navigate("/puzzle"); // Change this if your route is different
+    navigate("/puzzle");
   };
 
   return (
@@ -88,14 +92,14 @@ export default function AddMemoriesPage() {
           </h1>
 
           <p className="mt-4 text-lg leading-8 text-[#6d6257]">
-            Add the moments that make this gift unforgettable. Each memory will
-            become a puzzle your loved one unlocks during their journey.
+            Add the moments that make this gift unforgettable. Each memory
+            becomes a puzzle your loved one unlocks during their journey.
           </p>
 
           <div className="mt-12 space-y-8">
             {memories.map((memory, index) => (
               <MemoryCard
-                key={index}
+                key={memory.id}
                 index={index}
                 memory={memory}
                 onTitleChange={(value) =>

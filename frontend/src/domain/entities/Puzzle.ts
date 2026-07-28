@@ -1,19 +1,10 @@
-export class Puzzle {
-    constructor(
-        public readonly id: string,
-        public readonly memoryId: string,
-        public readonly rows: number,
-        public readonly columns: number,
-        public readonly completed: boolean = false
-    ) {}
+export interface PuzzlePiece {
+  id: number;
+  correctIndex: number;
+  currentIndex: number;
+}
 
-    complete(): Puzzle {
-        return new Puzzle(
-            this.id,
-            this.memoryId,
-            this.rows,
-            this.columns,
-            true
-        );
-    }
+export interface PuzzleState {
+  pieces: PuzzlePiece[];
+  size: number;
 }

@@ -1,27 +1,22 @@
 import { useNavigate } from "react-router-dom";
 import { useGift } from "../../context/GiftContext";
 import ProgressStepper from "../components/ProgressStepper";
+import type { PuzzleType } from "../../domain/entities/Gift";
 
-const puzzleTypes = [
+const puzzleTypes: {
+  id: PuzzleType;
+  emoji: string;
+  title: string;
+}[] = [
   {
     id: "jigsaw",
     emoji: "🧩",
     title: "Jigsaw",
   },
   {
-    id: "quiz",
-    emoji: "❓",
-    title: "Quiz",
-  },
-  {
-    id: "scramble",
+    id: "word-scramble",
     emoji: "🔤",
     title: "Word Scramble",
-  },
-  {
-    id: "match",
-    emoji: "🃏",
-    title: "Memory Match",
   },
 ];
 
@@ -29,7 +24,10 @@ export default function ChoosePuzzlePage() {
   const navigate = useNavigate();
   const { gift, setGift } = useGift();
 
-  const choosePuzzle = (memoryIndex: number, puzzle: string) => {
+  const choosePuzzle = (
+    memoryIndex: number,
+    puzzle: PuzzleType
+  ) => {
     const updatedMemories = [...gift.memories];
 
     updatedMemories[memoryIndex] = {
@@ -57,27 +55,27 @@ export default function ChoosePuzzlePage() {
         </h1>
 
         <p className="mt-4 text-lg text-[#6b5f52]">
-          Every memory deserves its own little challenge.
+          Choose one of two puzzle types for each memory.
         </p>
 
         <div className="mt-12 space-y-10">
           {gift.memories.map((memory, memoryIndex) => (
             <div
-              key={memoryIndex}
+              key={memory.id}
               className="rounded-3xl border border-[#e8dfd2] bg-[#fcfaf7] p-8 shadow-md"
             >
               <h2 className="mb-8 text-3xl font-bold text-[#4b3f34]">
                 {memory.title || `Memory ${memoryIndex + 1}`}
               </h2>
 
-              <div className="grid grid-cols-2 gap-5 lg:grid-cols-4">
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                 {puzzleTypes.map((puzzle) => (
                   <button
                     key={puzzle.id}
                     onClick={() =>
                       choosePuzzle(memoryIndex, puzzle.id)
                     }
-                    className={`rounded-2xl border p-6 transition-all duration-300 hover:-translate-y-1 ${
+                    className={`rounded-2xl border p-8 transition-all duration-300 hover:-translate-y-1 ${
                       memory.puzzle === puzzle.id
                         ? "border-[#d69a8c] bg-[#f8ebe7] shadow-lg"
                         : "border-[#e5ddd0] bg-white hover:border-[#d69a8c]"
@@ -85,7 +83,7 @@ export default function ChoosePuzzlePage() {
                   >
                     <div className="text-6xl">{puzzle.emoji}</div>
 
-                    <h3 className="mt-5 text-lg font-semibold text-[#4b3f34]">
+                    <h3 className="mt-5 text-xl font-semibold text-[#4b3f34]">
                       {puzzle.title}
                     </h3>
                   </button>

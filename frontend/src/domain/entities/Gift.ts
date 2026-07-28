@@ -1,19 +1,23 @@
-import { Memory } from "./Memory";
+export type PuzzleType = "jigsaw" | "word-scramble";
 
-export class Gift {
-    constructor(
-        public readonly id: string,
-        public readonly recipient: string,
-        public readonly occasion: string,
-        public readonly memories: Memory[]
-    ) {}
+export type MemoryStatus =
+  | "locked"
+  | "available"
+  | "completed";
 
-    addMemory(memory: Memory): Gift {
-        return new Gift(
-            this.id,
-            this.recipient,
-            this.occasion,
-            [...this.memories, memory]
-        );
-    }
+export interface Memory {
+  id: string;
+  title: string;
+  story: string;
+  image: File | null;
+  puzzle: PuzzleType;
+  status: MemoryStatus;
+}
+
+export interface Gift {
+    id: string;
+    recipient: string;
+    occasion: string;
+    journeyTitle: string;
+    memories: Memory[];
 }
