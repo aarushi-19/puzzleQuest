@@ -9,10 +9,11 @@ export function usePuzzle(size = 3) {
 
     for (let i = 0; i < totalPieces; i++) {
       pieces.push({
-        id: i,
-        currentIndex: i,
-        correctIndex: i,
-      });
+    id: i,
+    currentIndex: i,
+    correctIndex: i,
+    image: "",
+});
     }
 
     const shuffled = [...pieces].sort(() => Math.random() - 0.5);

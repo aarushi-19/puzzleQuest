@@ -1,68 +1,78 @@
+import Card from "./ui/Card";
+import Container from "./ui/Container";
+
+const steps = [
+  {
+    emoji: "📸",
+    title: "Choose Your Memories",
+    description:
+      "Upload photos, videos, and heartfelt stories that will become part of a beautiful interactive experience.",
+  },
+  {
+    emoji: "🧩",
+    title: "Design the Journey",
+    description:
+      "Arrange memories in any order and place engaging puzzles between them to build suspense.",
+  },
+  {
+    emoji: "💌",
+    title: "Unlock the Letter",
+    description:
+      "After solving every puzzle, your recipient reaches the final envelope containing your personal letter.",
+  },
+  {
+    emoji: "🎁",
+    title: "Share the Experience",
+    description:
+      "Publish your gift and send a private link for an unforgettable memory journey.",
+  },
+];
+
 export default function MemoryJourney() {
-  const steps = [
-    {
-      emoji: "📸",
-      title: "Choose a Memory",
-      text: "Upload a favourite photo and write the story behind it.",
-    },
-    {
-      emoji: "🧩",
-      title: "Pick a Puzzle",
-      text: "Hide every memory behind a fun challenge.",
-    },
-    {
-      emoji: "💌",
-      title: "Reveal a Message",
-      text: "Every solved puzzle unlocks a heartfelt message.",
-    },
-    {
-      emoji: "🎁",
-      title: "Final Surprise",
-      text: "End the journey with the biggest memory of all.",
-    },
-  ];
-
   return (
-    <section id="journey" className="py-32 px-6">
-      <div className="mx-auto max-w-6xl">
-
-        <div className="text-center mb-16">
-          <p className="uppercase tracking-[6px] text-[#8B6F47] text-sm font-semibold">
-            THE JOURNEY
+    <section id="journey" className="py-28">
+      <Container>
+        <div className="mx-auto max-w-3xl text-center">
+          <p className="mb-4 text-sm font-semibold uppercase tracking-[0.3em] text-[#B97A56]">
+            HOW IT WORKS
           </p>
 
-          <h2 className="mt-4 text-5xl font-bold text-[#4B3F34]">
-            Every Gift Tells a Story
+          <h2
+            className="text-5xl font-semibold"
+            style={{ fontFamily: "Playfair Display" }}
+          >
+            Every Gift Becomes a Journey
           </h2>
 
-          <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-[#6D6257]">
-            Build an unforgettable experience where every solved puzzle
-            unlocks another precious memory.
+          <p className="mt-6 text-lg leading-8 text-[#7A746C]">
+            PuzzleQuest transforms ordinary memories into an adventure where
+            each solved puzzle reveals another chapter of your story.
           </p>
         </div>
 
-        <div className="grid gap-8 md:grid-cols-4">
-
-          {steps.map((step) => (
-            <div
+        <div className="mt-20 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+          {steps.map((step, index) => (
+            <Card
               key={step.title}
-              className="rounded-3xl bg-white/80 p-8 text-center shadow-lg backdrop-blur-md transition duration-300 hover:-translate-y-2"
+              className="text-center transition-transform duration-300 hover:-translate-y-2"
             >
-              <div className="mb-5 text-5xl">{step.emoji}</div>
+              <div className="mb-6 text-5xl">{step.emoji}</div>
 
-              <h3 className="mb-3 text-2xl font-semibold text-[#4B3F34]">
+              <div className="mb-3 text-sm font-semibold text-[#B97A56]">
+                Step {index + 1}
+              </div>
+
+              <h3 className="mb-4 text-2xl font-semibold">
                 {step.title}
               </h3>
 
-              <p className="leading-7 text-[#6D6257]">
-                {step.text}
+              <p className="leading-7 text-[#7A746C]">
+                {step.description}
               </p>
-            </div>
+            </Card>
           ))}
-
         </div>
-
-      </div>
+      </Container>
     </section>
   );
 }

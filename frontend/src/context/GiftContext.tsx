@@ -9,21 +9,36 @@ type GiftContextType = {
 
 const GiftContext = createContext<GiftContextType | undefined>(undefined);
 
+interface GiftProviderProps {
+  children: ReactNode;
+}
+
 export function GiftProvider({
   children,
-}: {
-  children: ReactNode;
-}) {
+}: GiftProviderProps) {
   const [gift, setGift] = useState<Gift>({
     id: crypto.randomUUID(),
-    recipient: "",
+
+    giftTitle: "",
+
+    recipientName: "",
+
     occasion: "Birthday",
-    journeyTitle: "",
+
+    coverImage: null,
+
     memories: [],
+
+    createdAt: new Date(),
   });
 
   return (
-    <GiftContext.Provider value={{ gift, setGift }}>
+    <GiftContext.Provider
+      value={{
+        gift,
+        setGift,
+      }}
+    >
       {children}
     </GiftContext.Provider>
   );
@@ -33,7 +48,9 @@ export function useGift() {
   const context = useContext(GiftContext);
 
   if (!context) {
-    throw new Error("useGift must be used inside GiftProvider");
+    throw new Error(
+      "useGift must be used within a GiftProvider"
+    );
   }
 
   return context;

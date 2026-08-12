@@ -1,38 +1,38 @@
+import type { ImagePiece } from "./utils/splitImage";
 import PuzzlePiece from "./PuzzlePiece";
-import { usePuzzle } from "./hooks/usePuzzle";
 
 type PuzzleGridProps = {
-  imageUrl: string;
-  size?: number;
+  pieces: ImagePiece[];
+  size: number;
 };
 
 export default function PuzzleGrid({
-  imageUrl,
-  size = 3,
+  pieces,
+  size,
 }: PuzzleGridProps) {
-  const { pieces } = usePuzzle(size);
-
   return (
     <div
-      className="mx-auto grid max-w-lg gap-2"
+      className="
+        mx-auto
+        grid
+        w-fit
+        gap-3
+        rounded-[28px]
+        bg-[#f8f4ef]
+        p-5
+        shadow-xl
+        md:gap-4
+        md:p-6
+      "
       style={{
-        gridTemplateColumns: `repeat(${size}, 1fr)`,
+        gridTemplateColumns: `repeat(${size}, minmax(0, 1fr))`,
       }}
     >
       {pieces.map((piece) => (
-        <div
+        <PuzzlePiece
           key={piece.id}
-          style={{
-            gridRow: Math.floor(piece.currentIndex / size) + 1,
-            gridColumn: (piece.currentIndex % size) + 1,
-          }}
-        >
-          <PuzzlePiece
-            piece={piece}
-            imageUrl={imageUrl}
-            size={size}
-          />
-        </div>
+          piece={piece}
+        />
       ))}
     </div>
   );

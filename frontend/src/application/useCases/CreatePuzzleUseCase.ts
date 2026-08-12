@@ -1,4 +1,7 @@
-import type { PuzzleState, PuzzlePiece } from "../../domain/entities/Puzzle";
+import type {
+  PuzzlePiece,
+  PuzzleState,
+} from "../../domain/entities/Puzzle";
 
 export class CreatePuzzleUseCase {
   execute(size = 3): PuzzleState {
@@ -11,18 +14,12 @@ export class CreatePuzzleUseCase {
         id: i,
         correctIndex: i,
         currentIndex: i,
+        image: "",
       });
     }
 
-    const shuffled = pieces
-      .sort(() => Math.random() - 0.5)
-      .map((piece, index) => ({
-        ...piece,
-        currentIndex: index,
-      }));
-
     return {
-      pieces: shuffled,
+      pieces,
       size,
     };
   }

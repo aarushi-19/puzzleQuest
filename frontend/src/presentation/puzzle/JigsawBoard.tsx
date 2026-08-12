@@ -1,4 +1,4 @@
-import PuzzleGrid from "./PuzzleGrid";
+import PuzzleBoard from "./PuzzleBoard";
 
 const DEMO_IMAGE =
   "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800";
@@ -15,7 +15,10 @@ export default function JigsawBoard() {
           Complete the puzzle to unlock your next memory.
         </p>
 
-        <PuzzleGrid imageUrl={DEMO_IMAGE} />
+        <PuzzleBoard
+          imageUrl={DEMO_IMAGE}
+          size={3}
+        />
       </div>
     </main>
   );

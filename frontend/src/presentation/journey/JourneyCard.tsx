@@ -24,26 +24,59 @@ export default function JourneyCard({
   const isAvailable = memory.status === "available";
 
   return (
-    <div className="rounded-3xl border border-[#E6DDD1] bg-white p-8 shadow-lg transition hover:shadow-xl">
-      <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-semibold text-[#3A3028]">
-          {memory.title || `Memory ${index + 1}`}
-        </h2>
+    <article
+      className={`
+        rounded-3xl
+        border
+        p-6
+        transition
+        md:p-8
+        ${
+          isLocked
+            ? "border-[#e6ddd1] bg-[#f7f4ef]"
+            : isCompleted
+              ? "border-[#d8e1d2] bg-white"
+              : "border-[#e6ddd1] bg-white shadow-sm"
+        }
+      `}
+    >
+      {/* Header */}
+
+      <div className="flex items-center justify-between gap-4">
+        <div>
+          <p className="text-sm font-medium uppercase tracking-[0.2em] text-[#9f8b73]">
+            Memory {index + 1}
+          </p>
+
+          <h2 className="mt-2 text-2xl font-semibold text-[#4b3f34]">
+            {memory.title || `Memory ${index + 1}`}
+          </h2>
+        </div>
+
+        {/* Status icon */}
 
         {isLocked && (
-          <Lock className="h-6 w-6 text-gray-400" />
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#ebe7e1]">
+            <Lock className="h-5 w-5 text-[#9b948c]" />
+          </div>
         )}
 
         {isCompleted && (
-          <CheckCircle2 className="h-6 w-6 text-green-500" />
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#e7efe3]">
+            <CheckCircle2 className="h-6 w-6 text-[#7d9974]" />
+          </div>
         )}
 
         {isAvailable && (
-          <Puzzle className="h-6 w-6 text-[#D69A8C]" />
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#f8ebe7]">
+            <Puzzle className="h-6 w-6 text-[#d69a8c]" />
+          </div>
         )}
       </div>
 
-      <p className="mt-4 text-[#6B5F52]">
+      {/* Description */}
+
+      <p className="mt-5 leading-7 text-[#6b5f52]">
         {isLocked &&
           "Complete the previous memory to unlock this one."}
 
@@ -54,23 +87,49 @@ export default function JourneyCard({
           "You've already unlocked this memory."}
       </p>
 
+      {/* Action */}
+
       {isAvailable && (
         <button
+          type="button"
           onClick={onStart}
-          className="mt-8 w-full rounded-2xl bg-[#D69A8C] py-3 font-semibold text-white transition hover:bg-[#C88979]"
+          className="
+            mt-7
+            w-full
+            rounded-full
+            bg-[#d69a8c]
+            py-3.5
+            font-semibold
+            text-white
+            transition
+            hover:bg-[#c78879]
+          "
         >
-          Start Puzzle
+          Start Puzzle →
         </button>
       )}
 
       {isCompleted && (
         <button
+          type="button"
           onClick={onView}
-          className="mt-8 w-full rounded-2xl border border-[#D69A8C] py-3 font-semibold text-[#D69A8C] transition hover:bg-[#F8EBE7]"
+          className="
+            mt-7
+            w-full
+            rounded-full
+            border
+            border-[#d69a8c]
+            bg-white
+            py-3.5
+            font-semibold
+            text-[#b57767]
+            transition
+            hover:bg-[#f8ebe7]
+          "
         >
-          View Memory
+          View Memory →
         </button>
       )}
-    </div>
+    </article>
   );
 }

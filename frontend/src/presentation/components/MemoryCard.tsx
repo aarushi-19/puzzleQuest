@@ -1,8 +1,4 @@
-type Memory = {
-  title: string;
-  story: string;
-  image: File | null;
-};
+import type { Memory } from "../../domain/entities/Gift";
 
 type MemoryCardProps = {
   index: number;
@@ -20,11 +16,11 @@ export default function MemoryCard({
   onImageChange,
 }: MemoryCardProps) {
   return (
-    <div className="rounded-[30px] border border-[#e6ddd1] bg-[#fcfaf7] p-8 shadow-lg transition-all duration-300 hover:shadow-xl">
+    <div className="rounded-3xl border border-[#e6ddd1] bg-white p-8 shadow-sm">
 
       {/* Memory Number */}
 
-      <h2 className="mb-8 text-3xl font-bold text-[#4b3f34]">
+      <h2 className="mb-8 text-3xl font-semibold text-[#4b3f34]">
         Memory {index + 1}
       </h2>
 
@@ -39,7 +35,20 @@ export default function MemoryCard({
         placeholder="The Day We Met"
         value={memory.title}
         onChange={(e) => onTitleChange(e.target.value)}
-        className="mb-6 w-full rounded-2xl border border-[#ddd2c4] bg-white px-5 py-4 text-[#4b3f34] outline-none transition focus:border-[#d69a8c]"
+        className="
+          mb-6
+          w-full
+          rounded-2xl
+          border
+          border-[#ddd2c4]
+          bg-white
+          px-5
+          py-4
+          text-[#4b3f34]
+          outline-none
+          transition
+          focus:border-[#d69a8c]
+        "
       />
 
       {/* Story */}
@@ -53,10 +62,24 @@ export default function MemoryCard({
         placeholder="Tell the story behind this beautiful memory..."
         value={memory.story}
         onChange={(e) => onStoryChange(e.target.value)}
-        className="mb-8 w-full rounded-2xl border border-[#ddd2c4] bg-white px-5 py-4 text-[#4b3f34] outline-none transition focus:border-[#d69a8c]"
+        className="
+          mb-8
+          w-full
+          resize-none
+          rounded-2xl
+          border
+          border-[#ddd2c4]
+          bg-white
+          px-5
+          py-4
+          text-[#4b3f34]
+          outline-none
+          transition
+          focus:border-[#d69a8c]
+        "
       />
 
-      {/* Upload */}
+      {/* Photo */}
 
       <label className="mb-3 block font-medium text-[#6d6257]">
         Upload Photo
@@ -67,68 +90,79 @@ export default function MemoryCard({
         <input
           type="file"
           accept="image/*"
-          onChange={(e) =>
-            onImageChange(e.target.files?.[0] || null)
-          }
+          onChange={(e) => {
+            const file = e.target.files?.[0] ?? null;
+            onImageChange(file);
+          }}
           className="hidden"
         />
 
         {memory.image ? (
-
-          <div className="overflow-hidden rounded-3xl border border-[#e6ddd1] bg-white shadow-md transition hover:shadow-lg">
+          <div className="overflow-hidden rounded-3xl border border-[#e6ddd1] bg-white">
 
             <img
               src={URL.createObjectURL(memory.image)}
-              alt="Preview"
+              alt={memory.title || "Memory preview"}
               className="h-72 w-full object-cover"
             />
 
-            <div className="flex items-center justify-between p-5">
+            <div className="flex items-center justify-between gap-4 p-5">
 
-              <div>
-                <p className="font-semibold text-[#4b3f34]">
-                  ✓ {memory.image.name}
+              <div className="min-w-0">
+                <p className="truncate font-semibold text-[#4b3f34]">
+                  {memory.image.name}
                 </p>
 
-                <p className="text-sm text-[#8b7c70]">
-                  Click to replace this photo
+                <p className="mt-1 text-sm text-[#8b7c70]">
+                  Click the photo to replace it
                 </p>
               </div>
 
-              <div className="rounded-full bg-[#f6ece7] px-4 py-2 text-sm font-semibold text-[#b57767]">
+              <span className="shrink-0 rounded-full bg-[#f6ece7] px-4 py-2 text-sm font-semibold text-[#b57767]">
                 Change
-              </div>
+              </span>
 
             </div>
-
           </div>
-
         ) : (
+          <div
+            className="
+              flex
+              h-64
+              flex-col
+              items-center
+              justify-center
+              rounded-3xl
+              border-2
+              border-dashed
+              border-[#d8cec1]
+              bg-[#faf6ef]
+              transition
+              hover:border-[#d69a8c]
+              hover:bg-[#f6f1e8]
+            "
+          >
 
-          <div className="flex h-72 flex-col items-center justify-center rounded-3xl border-2 border-dashed border-[#d8cec1] bg-[#faf6ef] transition-all duration-300 hover:border-[#d69a8c] hover:bg-[#f6f1e8]">
-
-            <div className="text-6xl">
+            <div className="text-5xl">
               📷
             </div>
 
-            <h3 className="mt-6 text-2xl font-semibold text-[#4b3f34]">
+            <h3 className="mt-5 text-xl font-semibold text-[#4b3f34]">
               Upload Your Memory
             </h3>
 
-            <p className="mt-3 text-[#8b7c70]">
+            <p className="mt-2 text-[#8b7c70]">
               Click anywhere to browse
             </p>
 
-            <p className="mt-6 text-sm tracking-wide text-[#b1a292]">
+            <p className="mt-4 text-sm tracking-wide text-[#b1a292]">
               JPG • PNG • JPEG • HEIC
             </p>
 
           </div>
-
         )}
 
       </label>
-
     </div>
   );
 }

@@ -78,43 +78,65 @@ export default function AddMemoriesPage() {
   };
 
   return (
-    <main className="min-h-screen px-6 py-16">
-      <div className="mx-auto max-w-3xl">
+    <main className="min-h-screen px-6 py-12">
+      <div className="mx-auto max-w-5xl">
+
         <ProgressStepper currentStep={2} />
 
-        <div className="mt-10 rounded-[36px] border border-[#e6ddd1] bg-white/75 p-10 shadow-2xl backdrop-blur-md">
+        <div className="mt-10 rounded-[32px] border border-[#e6ddd1] bg-white/80 p-8 shadow-xl backdrop-blur-md md:p-10">
+
+          {/* Step */}
+
           <p className="text-sm font-semibold uppercase tracking-[0.25em] text-[#9f8b73]">
             Step 2 of 4
           </p>
 
-          <h1 className="mt-3 text-5xl font-bold text-[#4b3f34]">
+          {/* Heading */}
+
+          <h1 className="mt-3 text-4xl font-semibold text-[#4b3f34] md:text-5xl">
             Add Your Memories
           </h1>
 
-          <p className="mt-4 text-lg leading-8 text-[#6d6257]">
+          <p className="mt-4 max-w-2xl text-lg leading-8 text-[#6d6257]">
             Add the moments that make this gift unforgettable. Each memory
             becomes a puzzle your loved one unlocks during their journey.
           </p>
 
-          <div className="mt-12 space-y-8">
+          {/* Memories */}
+
+          <div className="mt-10 space-y-8">
             {memories.map((memory, index) => (
               <MemoryCard
                 key={memory.id}
                 index={index}
                 memory={memory}
                 onTitleChange={(value) =>
-                  handleMemoryChange(index, "title", value)
+                  handleMemoryChange(
+                    index,
+                    "title",
+                    value
+                  )
                 }
                 onStoryChange={(value) =>
-                  handleMemoryChange(index, "story", value)
+                  handleMemoryChange(
+                    index,
+                    "story",
+                    value
+                  )
                 }
                 onImageChange={(file) =>
-                  handleImageChange(index, file)
+                  handleImageChange(
+                    index,
+                    file
+                  )
                 }
               />
             ))}
 
+            {/* Add Memory */}
+
             <button
+              type="button"
               onClick={addMemory}
               className="
                 w-full
@@ -128,16 +150,18 @@ export default function AddMemoriesPage() {
                 font-semibold
                 text-[#8b6f47]
                 transition
-                duration-300
+                duration-200
                 hover:border-[#d69a8c]
                 hover:bg-[#fffaf3]
-                hover:shadow-lg
               "
             >
               + Add Another Memory
             </button>
 
+            {/* Continue */}
+
             <button
+              type="button"
               onClick={handleContinue}
               className="
                 w-full
@@ -147,12 +171,10 @@ export default function AddMemoriesPage() {
                 text-lg
                 font-semibold
                 text-white
-                shadow-lg
+                shadow-md
                 transition
-                duration-300
-                hover:-translate-y-1
+                duration-200
                 hover:bg-[#cb8c7d]
-                hover:shadow-xl
               "
             >
               Continue →

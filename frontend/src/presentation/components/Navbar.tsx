@@ -1,41 +1,94 @@
 import { Link } from "react-router-dom";
+import Container from "./ui/Container";
 
 export default function Navbar() {
   return (
-    <header className="fixed top-0 left-0 z-50 w-full">
-      <div className="mx-auto flex max-w-7xl items-center justify-between rounded-full bg-white/70 px-8 py-4 shadow-lg backdrop-blur-md mt-5">
+    <header className="fixed top-6 left-0 right-0 z-50">
+      <Container>
+        <nav
+          className="
+            mx-auto
+            max-w-[1180px]
+            h-[72px]
 
-        <Link
-          to="/"
-          className="text-2xl font-bold text-[#4B3F34]"
+            flex
+            items-center
+            justify-between
+
+            rounded-full
+
+            bg-white/95
+            backdrop-blur-md
+
+            px-10
+
+            shadow-[0_12px_35px_rgba(0,0,0,.08)]
+          "
         >
-          PuzzleQuest
-        </Link>
+          {/* Logo */}
 
-        <nav className="hidden gap-8 text-[#5D5146] md:flex">
+          <Link
+            to="/"
+            style={{ fontFamily: "'Playfair Display', serif" }}
+            className="
+              text-[34px]
+              font-semibold
+              text-[#433B32]
+              tracking-tight
+            "
+          >
+            PuzzleQuest
+          </Link>
 
-          <a href="#features" className="hover:text-[#D69A8C]">
-            Features
-          </a>
+          {/* Navigation */}
 
-          <a href="#journey" className="hover:text-[#D69A8C]">
-            Journey
-          </a>
+          <div className="hidden lg:flex items-center gap-12">
+            <a
+              href="#features"
+              className="text-[17px] text-[#4E463F] hover:text-[#7D9B7A] transition"
+            >
+              Features
+            </a>
 
-          <a href="#faq" className="hover:text-[#D69A8C]">
-            FAQ
-          </a>
+            <a
+              href="#journey"
+              className="text-[17px] text-[#4E463F] hover:text-[#7D9B7A] transition"
+            >
+              Journey
+            </a>
 
+            <a
+              href="#faq"
+              className="text-[17px] text-[#4E463F] hover:text-[#7D9B7A] transition"
+            >
+              FAQ
+            </a>
+          </div>
+
+          {/* Button */}
+
+          <Link
+            to="/create"
+            className="
+              rounded-full
+
+              bg-[#D89A89]
+
+              px-8
+              py-3
+
+              text-[16px]
+              font-semibold
+              text-white
+
+              transition
+              hover:bg-[#C88776]
+            "
+          >
+            Create Gift
+          </Link>
         </nav>
-
-        <Link
-          to="/create"
-          className="rounded-full bg-[#D69A8C] px-6 py-3 text-white transition hover:bg-[#C88576]"
-        >
-          Create Gift
-        </Link>
-
-      </div>
+      </Container>
     </header>
   );
 }

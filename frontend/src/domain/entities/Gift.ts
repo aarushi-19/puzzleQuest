@@ -7,17 +7,30 @@ export type MemoryStatus =
 
 export interface Memory {
   id: string;
+
   title: string;
+
   story: string;
+
   image: File | null;
+
   puzzle: PuzzleType;
+
   status: MemoryStatus;
 }
 
 export interface Gift {
-    id: string;
-    recipient: string;
-    occasion: string;
-    journeyTitle: string;
-    memories: Memory[];
+  id: string;
+
+  giftTitle: string;
+
+  recipientName: string;
+
+  occasion: string;
+
+  coverImage: File | null;
+
+  memories: Memory[];
+
+  createdAt: Date;
 }

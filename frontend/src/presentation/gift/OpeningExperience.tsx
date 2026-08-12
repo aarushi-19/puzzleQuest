@@ -34,7 +34,7 @@ export default function OpeningExperience() {
     case "letter":
       return (
         <Letter
-          recipient={gift.recipient}
+          recipient={gift.recipientName}
           occasion={gift.occasion}
           onContinue={() => setStage("journey")}
         />
