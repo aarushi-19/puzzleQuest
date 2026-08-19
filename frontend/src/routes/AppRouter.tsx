@@ -14,6 +14,8 @@ import JourneyPage from "../presentation/pages/JourneyPage";
 import PuzzlePage from "../presentation/pages/PuzzlePage";
 import JigsawBoard from "../presentation/puzzle/JigsawBoard";
 import MemoryPage from "../presentation/pages/MemoryPage";
+import MemoryGalleryPage from "../presentation/pages/MemoryGalleryPage";
+
 
 export default function AppRouter() {
   return (
@@ -78,6 +80,11 @@ export default function AppRouter() {
         <Route
           path="/memory/:memoryId"
           element={<MemoryPage />}
+        />
+
+        <Route
+          path="/gallery"
+          element={<MemoryGalleryPage />}
         />
 
       </Routes>

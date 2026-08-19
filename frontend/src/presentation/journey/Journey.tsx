@@ -19,7 +19,9 @@ export default function Journey() {
     total > 0 && completed === total;
 
   /*
-   * Final Journey Experience
+   * ==========================================
+   * FINAL JOURNEY SCREEN
+   * ==========================================
    */
 
   if (journeyComplete) {
@@ -58,7 +60,7 @@ export default function Journey() {
             "
           >
 
-            {/* Celebration */}
+            {/* Heart */}
 
             <div
               className="
@@ -77,6 +79,8 @@ export default function Journey() {
               ❤️
             </div>
 
+            {/* Small Heading */}
+
             <p
               className="
                 mt-8
@@ -88,6 +92,8 @@ export default function Journey() {
             >
               Journey Complete
             </p>
+
+            {/* Main Heading */}
 
             <h1
               className="
@@ -102,6 +108,8 @@ export default function Journey() {
               You unlocked every memory.
             </h1>
 
+            {/* Description */}
+
             <p
               className="
                 mx-auto
@@ -112,10 +120,12 @@ export default function Journey() {
                 text-[#6d6257]
               "
             >
-              Every puzzle has been solved and
-              every special moment has been
-              revealed.
+              Every puzzle has been solved
+              and every special moment has
+              been revealed.
             </p>
+
+            {/* Quote */}
 
             <p
               className="
@@ -147,7 +157,7 @@ export default function Journey() {
               />
             </div>
 
-            {/* Buttons */}
+            {/* Relive Memories */}
 
             <div
               className="
@@ -159,11 +169,10 @@ export default function Journey() {
                 gap-4
               "
             >
-
               <button
                 type="button"
                 onClick={() =>
-                  navigate("/journey")
+                  navigate("/gallery")
                 }
                 className="
                   w-full
@@ -180,7 +189,6 @@ export default function Journey() {
               >
                 Relive the Memories ❤️
               </button>
-
             </div>
 
           </div>
@@ -190,7 +198,9 @@ export default function Journey() {
   }
 
   /*
-   * Normal Journey
+   * ==========================================
+   * NORMAL JOURNEY
+   * ==========================================
    */
 
   return (
@@ -204,13 +214,22 @@ export default function Journey() {
     >
       <div className="mx-auto max-w-5xl">
 
+        {/* Header */}
+
         <JourneyHeader
           recipient={gift.recipientName}
           occasion={gift.occasion}
           title={gift.giftTitle}
         />
 
-        <div className="mt-12 space-y-8">
+        {/* Memory Cards */}
+
+        <div
+          className="
+            mt-12
+            space-y-8
+          "
+        >
           {gift.memories.map(
             (memory, index) => (
               <JourneyCard
@@ -231,6 +250,8 @@ export default function Journey() {
             )
           )}
         </div>
+
+        {/* Progress */}
 
         <div className="mt-12">
           <JourneyProgress
