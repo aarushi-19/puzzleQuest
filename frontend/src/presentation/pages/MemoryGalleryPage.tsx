@@ -7,36 +7,62 @@ export default function MemoryGalleryPage() {
   const navigate = useNavigate();
   const { gift } = useGift();
 
+  const [imageUrls, setImageUrls] = useState<
+    Record<string, string>
+  >({});
+
   const [selectedMemoryId, setSelectedMemoryId] =
     useState<string | null>(null);
+
+  /*
+   * Selected memory.
+   */
 
   const selectedMemory = gift.memories.find(
     (memory) => memory.id === selectedMemoryId
   );
 
-  const [selectedImageUrl, setSelectedImageUrl] =
-    useState<string | null>(null);
+  const selectedImageUrl =
+    selectedMemoryId
+      ? imageUrls[selectedMemoryId] ?? null
+      : null;
 
   /*
-   * Create a temporary URL for the selected image.
+   * Create image URLs once for the current
+   * memories and clean them up properly.
    */
 
   useEffect(() => {
-    if (!selectedMemory?.image) {
-      setSelectedImageUrl(null);
-      return;
-    }
+    const urls: Record<string, string> = {};
 
-    const url = URL.createObjectURL(
-      selectedMemory.image
-    );
+    gift.memories.forEach((memory) => {
+      if (memory.image) {
+        urls[memory.id] =
+          URL.createObjectURL(memory.image);
+      }
+    });
 
-    setSelectedImageUrl(url);
+    setImageUrls(urls);
+
+    /*
+     * Clean up object URLs when the memories
+     * change or the page is unmounted.
+     */
 
     return () => {
-      URL.revokeObjectURL(url);
+      Object.values(urls).forEach((url) => {
+        URL.revokeObjectURL(url);
+      });
     };
-  }, [selectedMemory]);
+  }, [gift.memories]);
+
+  /*
+   * Close the memory modal.
+   */
+
+  function closeMemory() {
+    setSelectedMemoryId(null);
+  }
 
   return (
     <main
@@ -49,7 +75,9 @@ export default function MemoryGalleryPage() {
     >
       <div className="mx-auto max-w-6xl">
 
-        {/* Back */}
+        {/* =====================================
+            BACK
+           ===================================== */}
 
         <button
           type="button"
@@ -66,7 +94,9 @@ export default function MemoryGalleryPage() {
           ← Back to Journey
         </button>
 
-        {/* Header */}
+        {/* =====================================
+            HEADER
+           ===================================== */}
 
         <header className="text-center">
 
@@ -115,7 +145,9 @@ export default function MemoryGalleryPage() {
 
         </header>
 
-        {/* Memory Grid */}
+        {/* =====================================
+            MEMORY GRID
+           ===================================== */}
 
         <div
           className="
@@ -130,11 +162,7 @@ export default function MemoryGalleryPage() {
           {gift.memories.map(
             (memory, index) => {
               const imageUrl =
-                memory.image
-                  ? URL.createObjectURL(
-                      memory.image
-                    )
-                  : null;
+                imageUrls[memory.id];
 
               return (
                 <button
@@ -160,7 +188,10 @@ export default function MemoryGalleryPage() {
                     hover:shadow-2xl
                   "
                 >
-                  {/* Photo */}
+
+                  {/* =================================
+                      PHOTO
+                     ================================= */}
 
                   <div
                     className="
@@ -170,6 +201,7 @@ export default function MemoryGalleryPage() {
                       bg-[#f8f4ef]
                     "
                   >
+
                     {imageUrl ? (
                       <img
                         src={imageUrl}
@@ -193,16 +225,31 @@ export default function MemoryGalleryPage() {
                         className="
                           flex
                           h-full
+                          flex-col
                           items-center
                           justify-center
-                          text-5xl
+                          text-center
                         "
                       >
-                        ❤️
+
+                        <div className="text-5xl">
+                          ❤️
+                        </div>
+
+                        <p
+                          className="
+                            mt-3
+                            text-sm
+                            text-[#8b7c70]
+                          "
+                        >
+                          Image unavailable
+                        </p>
+
                       </div>
                     )}
 
-                    {/* Memory number */}
+                    {/* Memory Number */}
 
                     <div
                       className="
@@ -222,9 +269,12 @@ export default function MemoryGalleryPage() {
                     >
                       Memory {index + 1}
                     </div>
+
                   </div>
 
-                  {/* Content */}
+                  {/* =================================
+                      CONTENT
+                     ================================= */}
 
                   <div className="p-6">
 
@@ -242,17 +292,33 @@ export default function MemoryGalleryPage() {
                         }`}
                     </h2>
 
-                    <p
-                      className="
-                        mt-3
-                        line-clamp-3
-                        leading-7
-                        text-[#6d6257]
-                      "
-                    >
-                      {memory.story ||
-                        "A beautiful memory waiting to be revisited."}
-                    </p>
+                    {/* Story */}
+
+                    {memory.story ? (
+                      <p
+                        className="
+                          mt-3
+                          line-clamp-3
+                          whitespace-pre-line
+                          leading-7
+                          text-[#6d6257]
+                        "
+                      >
+                        {memory.story}
+                      </p>
+                    ) : (
+                      <p
+                        className="
+                          mt-3
+                          leading-7
+                          italic
+                          text-[#9a8d80]
+                        "
+                      >
+                        No story was added
+                        for this memory.
+                      </p>
+                    )}
 
                     <p
                       className="
@@ -266,13 +332,16 @@ export default function MemoryGalleryPage() {
                     </p>
 
                   </div>
+
                 </button>
               );
             }
           )}
         </div>
 
-        {/* Bottom Message */}
+        {/* =====================================
+            BOTTOM MESSAGE
+           ===================================== */}
 
         <div
           className="
@@ -321,10 +390,9 @@ export default function MemoryGalleryPage() {
             py-8
             backdrop-blur-sm
           "
-          onClick={() =>
-            setSelectedMemoryId(null)
-          }
+          onClick={closeMemory}
         >
+
           <div
             className="
               max-h-[90vh]
@@ -340,10 +408,18 @@ export default function MemoryGalleryPage() {
             }
           >
 
-            {/* Image */}
+            {/* =================================
+                IMAGE
+               ================================= */}
 
-            {selectedImageUrl && (
-              <div className="overflow-hidden rounded-t-[32px]">
+            {selectedImageUrl ? (
+              <div
+                className="
+                  overflow-hidden
+                  rounded-t-[32px]
+                  bg-[#f8f4ef]
+                "
+              >
                 <img
                   src={selectedImageUrl}
                   alt={
@@ -354,13 +430,39 @@ export default function MemoryGalleryPage() {
                     max-h-[60vh]
                     w-full
                     object-contain
-                    bg-[#f8f4ef]
                   "
                 />
               </div>
+            ) : (
+              <div
+                className="
+                  flex
+                  h-72
+                  flex-col
+                  items-center
+                  justify-center
+                  rounded-t-[32px]
+                  bg-[#f8f4ef]
+                "
+              >
+                <div className="text-5xl">
+                  ❤️
+                </div>
+
+                <p
+                  className="
+                    mt-3
+                    text-[#8b7c70]
+                  "
+                >
+                  Image unavailable
+                </p>
+              </div>
             )}
 
-            {/* Story */}
+            {/* =================================
+                STORY
+               ================================= */}
 
             <div className="p-8 md:p-10">
 
@@ -396,25 +498,35 @@ export default function MemoryGalleryPage() {
                 "
               />
 
-              <p
-                className="
-                  whitespace-pre-line
-                  text-lg
-                  leading-9
-                  text-[#5c5148]
-                "
-              >
-                {selectedMemory.story ||
-                  "This memory was made with love."}
-              </p>
+              {selectedMemory.story ? (
+                <p
+                  className="
+                    whitespace-pre-line
+                    text-lg
+                    leading-9
+                    text-[#5c5148]
+                  "
+                >
+                  {selectedMemory.story}
+                </p>
+              ) : (
+                <p
+                  className="
+                    text-lg
+                    italic
+                    text-[#8b7c70]
+                  "
+                >
+                  This memory was made
+                  with love.
+                </p>
+              )}
 
               {/* Close */}
 
               <button
                 type="button"
-                onClick={() =>
-                  setSelectedMemoryId(null)
-                }
+                onClick={closeMemory}
                 className="
                   mt-10
                   w-full
@@ -433,6 +545,7 @@ export default function MemoryGalleryPage() {
             </div>
 
           </div>
+
         </div>
       )}
 
