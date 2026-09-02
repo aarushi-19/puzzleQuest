@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import Container from "./ui/Container";
+import puzzleQuestLogo from "../../assets/puzzlequest-logo.png";
 
 export default function Navbar() {
   return (
@@ -20,7 +21,7 @@ export default function Navbar() {
             bg-white/95
             backdrop-blur-md
 
-            px-10
+            px-8
 
             shadow-[0_12px_35px_rgba(0,0,0,.08)]
           "
@@ -29,15 +30,39 @@ export default function Navbar() {
 
           <Link
             to="/"
-            style={{ fontFamily: "'Playfair Display', serif" }}
             className="
-              text-[34px]
-              font-semibold
-              text-[#433B32]
-              tracking-tight
+              flex
+              items-center
+              gap-3
+              group
             "
           >
-            PuzzleQuest
+            <img
+              src={puzzleQuestLogo}
+              alt="PuzzleQuest"
+              className="
+                h-14
+                w-14
+                object-contain
+                transition
+                duration-300
+                group-hover:scale-105
+              "
+            />
+
+            <span
+              style={{
+                fontFamily: "'Playfair Display', serif",
+              }}
+              className="
+                text-[32px]
+                font-semibold
+                text-[#433B32]
+                tracking-tight
+              "
+            >
+              PuzzleQuest
+            </span>
           </Link>
 
           {/* Navigation */}
@@ -45,21 +70,36 @@ export default function Navbar() {
           <div className="hidden lg:flex items-center gap-12">
             <a
               href="#features"
-              className="text-[17px] text-[#4E463F] hover:text-[#7D9B7A] transition"
+              className="
+                text-[17px]
+                text-[#4E463F]
+                hover:text-[#7D9B7A]
+                transition
+              "
             >
               Features
             </a>
 
             <a
               href="#journey"
-              className="text-[17px] text-[#4E463F] hover:text-[#7D9B7A] transition"
+              className="
+                text-[17px]
+                text-[#4E463F]
+                hover:text-[#7D9B7A]
+                transition
+              "
             >
               Journey
             </a>
 
             <a
               href="#faq"
-              className="text-[17px] text-[#4E463F] hover:text-[#7D9B7A] transition"
+              className="
+                text-[17px]
+                text-[#4E463F]
+                hover:text-[#7D9B7A]
+                transition
+              "
             >
               FAQ
             </a>
