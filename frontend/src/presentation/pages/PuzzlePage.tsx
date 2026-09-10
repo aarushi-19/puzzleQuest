@@ -22,7 +22,6 @@ export default function PuzzlePage() {
     useState(false);
 
   /*
-   * IMPORTANT:
    * Whenever we move to a different memory,
    * start that memory from the puzzle screen.
    */
@@ -41,9 +40,7 @@ export default function PuzzlePage() {
       return;
     }
 
-    const url = URL.createObjectURL(
-      memory.image
-    );
+    const url = URL.createObjectURL(memory.image);
 
     setImageUrl(url);
 
@@ -164,7 +161,8 @@ export default function PuzzlePage() {
     });
 
     /*
-     * Show the original photograph.
+     * Show the original photograph
+     * and the memory story.
      */
 
     setShowReveal(true);
@@ -179,6 +177,7 @@ export default function PuzzlePage() {
       navigate(
         `/puzzle/${nextMemory.id}`
       );
+
       return;
     }
 
@@ -285,48 +284,58 @@ export default function PuzzlePage() {
             </div>
           )}
 
-          {/* Memory Unlocked */}
+          {/* Memory Story */}
 
           <div
             className="
               mx-auto
               mt-8
-              max-w-2xl
-              rounded-3xl
+              max-w-3xl
+              rounded-[32px]
               border
-              border-[#d8e5d2]
-              bg-[#f1f7ee]
+              border-[#e6ddd1]
+              bg-[#fffdf9]
               px-8
-              py-8
-              text-center
-              shadow-sm
+              py-10
+              shadow-lg
+              md:px-12
+              md:py-12
             "
           >
 
-            <div className="text-5xl">
-              ❤️
-            </div>
+            <div className="text-center">
 
-            <h2
-              className="
-                mt-4
-                text-2xl
-                font-semibold
-                text-[#4b3f34]
-              "
-            >
-              Memory Unlocked
-            </h2>
+              <div className="text-5xl">
+                ❤️
+              </div>
+
+              <p
+                className="
+                  mt-5
+                  text-sm
+                  font-semibold
+                  uppercase
+                  tracking-[0.2em]
+                  text-[#9f8b73]
+                "
+              >
+                The Story Behind This Memory
+              </p>
+
+            </div>
 
             <p
               className="
-                mt-3
-                leading-7
-                text-[#6d6257]
+                mt-7
+                whitespace-pre-wrap
+                text-center
+                text-lg
+                leading-9
+                text-[#5c5148]
               "
             >
-              This beautiful memory is
-              now yours to revisit.
+              {memory.story ||
+                "This memory doesn't have a story yet."}
             </p>
 
           </div>
@@ -521,19 +530,11 @@ export default function PuzzlePage() {
             Memory Puzzle
           </p>
 
-          <h1
-            className="
-              mt-3
-              text-5xl
-              font-serif
-              font-semibold
-              text-[#4b3f34]
-              md:text-6xl
-            "
-          >
-            {memory.title ||
-              "A Special Memory"}
-          </h1>
+          {/* IMPORTANT:
+              The memory title has been removed here.
+              It should NOT be visible before the puzzle
+              is solved.
+          */}
 
           <p
             className="
